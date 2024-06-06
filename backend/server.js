@@ -13,6 +13,10 @@ const app = express();
 const oracledb = require('oracledb');
 oracledb.initOracleClient({ libDir: '/opt/oracle/instantclient_19_19' });
 
+// Middleware per il parsing del corpo della richiesta
+const cors = require('cors');
+app.use(cors());
+
 // Percorsi degli endpoint
 app.use('/employees', employeesEndpoints);
 app.use('/trains', trainsEndpoints);

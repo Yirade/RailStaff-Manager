@@ -1,0 +1,29 @@
+.Logo {
+    margin-right: 20px;;
+}
+
+.Main {
+    border-top-left-radius: 20px;
+}
+
+/* Stile per le opzioni del menu */
+.nav-link {
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Aggiungi spazio tra l'icona e il testo */
+  .nav-link svg {
+    margin-right: 8px;
+  }
+
+  .Options {
+    margin-top: 50px;
+    margin-left: 25px;
+  }
+
+  .InfoOpt {
+    margin-top: 50px;
+    margin-left: 25px;
+  }
