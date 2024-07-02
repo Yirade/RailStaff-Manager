@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
         const result = await connection.execute(
             `INSERT INTO employees (firstName, lastName, contactInformation, employmentStatus, positionId) 
              VALUES (:firstName, :lastName, :contactInformation, :employmentStatus, :positionId)`,
-            [firstName, lastName, contactInformation, employmentStatus, positionId],
+            { firstName, lastName, contactInformation, employmentStatus, positionId },
             { autoCommit: true }
         );
         res.status(201).json({ message: 'Dipendente creato con successo!' });
@@ -44,8 +44,8 @@ router.get('/:id', async (req, res) => {
     try {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
-            `SELECT * FROM employees WHERE id = :id`,
-            [id]
+            `SELECT * FROM employees WHERE EMPLOYEEID = :id`,
+            {id}
         );
         res.status(200).json(result.rows);
         await connection.close();
@@ -64,8 +64,8 @@ router.put('/:id', async (req, res) => {
             `UPDATE employees 
              SET firstName = :firstName, lastName = :lastName, contactInformation = :contactInformation, 
                  employmentStatus = :employmentStatus, positionId = :positionId
-             WHERE id = :id`,
-            [firstName, lastName, contactInformation, employmentStatus, positionId, id],
+             WHERE EMPLOYEEID = :id`,
+            {firstName, lastName, contactInformation, employmentStatus, positionId, id},
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Dipendente aggiornato con successo!' });
@@ -81,8 +81,8 @@ router.delete('/:id', async (req, res) => {
     try {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
-            `DELETE FROM employees WHERE id = :id`,
-            [id],
+            `DELETE FROM employees WHERE EMPLOYEEID = :id`,
+            { id },
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Dipendente eliminato con successo!' });
@@ -99,7 +99,7 @@ router.get('/employmentStatus/:statusId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `SELECT * FROM employees WHERE employmentStatus = :statusId`,
-            [statusId]
+            {statusId}
         );
         res.status(200).json(result.rows);
         await connection.close();
@@ -115,7 +115,7 @@ router.get('/position/:positionId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `SELECT * FROM employees WHERE positionId = :positionId`,
-            [positionId]
+            {positionId}
         );
         res.status(200).json(result.rows);
         await connection.close();

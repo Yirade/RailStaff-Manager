@@ -13,6 +13,9 @@ const app = express();
 const oracledb = require('oracledb');
 oracledb.initOracleClient({ libDir: '/opt/oracle/instantclient_19_19' });
 
+// Configura il formato di output di OracleDB
+oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
+
 // Middleware per il parsing del corpo della richiesta
 const cors = require('cors');
 app.use(cors());

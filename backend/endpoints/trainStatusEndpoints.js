@@ -27,7 +27,7 @@ router.get('/:trainStatusId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `SELECT * FROM trainStatus WHERE trainStatusId = :trainStatusId`,
-            [trainStatusId]
+            {trainStatusId}
         );
         res.status(200).json(result.rows);
         await connection.close();
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `INSERT INTO trainStatus (statusName) VALUES (:statusName)`,
-            [statusName],
+            {statusName},
             { autoCommit: true }
         );
         res.status(201).json({ message: 'Stato del treno creato con successo!' });
@@ -61,7 +61,7 @@ router.put('/:trainStatusId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `UPDATE trainStatus SET statusName = :statusName WHERE trainStatusId = :trainStatusId`,
-            [statusName, trainStatusId],
+            {statusName, trainStatusId},
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Stato del treno modificato con successo!' });
@@ -78,7 +78,7 @@ router.delete('/:trainStatusId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `DELETE FROM trainStatus WHERE trainStatusId = :trainStatusId`,
-            [trainStatusId],
+            {trainStatusId},
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Stato del treno eliminato con successo!' });

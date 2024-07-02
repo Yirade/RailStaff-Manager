@@ -27,7 +27,7 @@ router.get('/:positionId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `SELECT * FROM position WHERE positionId = :positionId`,
-            [positionId]
+            {positionId}
         );
         res.status(200).json(result.rows);
         await connection.close();
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `INSERT INTO position (positionName, salary) VALUES (:positionName, :salary)`,
-            [positionName, salary],
+            {positionName, salary},
             { autoCommit: true }
         );
         res.status(201).json({ message: 'Posizione creata con successo!' });
@@ -61,7 +61,7 @@ router.put('/:positionId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `UPDATE position SET positionName = :positionName, salary = :salary WHERE positionId = :positionId`,
-            [positionName, salary, positionId],
+            {positionName, salary, positionId},
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Posizione modificata con successo!' });
@@ -78,7 +78,7 @@ router.delete('/:positionId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `DELETE FROM position WHERE positionId = :positionId`,
-            [positionId],
+            {positionId},
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Posizione eliminata con successo!' });

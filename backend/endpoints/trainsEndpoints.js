@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
         const result = await connection.execute(
             `INSERT INTO trains (model, capacity, maintenanceSchedule, currentStatus) 
              VALUES (:model, :capacity, TO_DATE(:maintenanceSchedule, 'YYYY-MM-DD'), :currentStatus)`,
-            [model, capacity, maintenanceSchedule, currentStatus],
+            {model, capacity, maintenanceSchedule, currentStatus},
             { autoCommit: true }
         );
         res.status(201).json({ message: 'Treno creato con successo!' });
@@ -34,7 +34,7 @@ router.put('/:trainId', async (req, res) => {
             `UPDATE trains 
              SET model = :model, capacity = :capacity, maintenanceSchedule = TO_DATE(:maintenanceSchedule, 'YYYY-MM-DD'), currentStatus = :currentStatus
              WHERE trainId = :trainId`,
-            [model, capacity, maintenanceSchedule, currentStatus, trainId],
+            {model, capacity, maintenanceSchedule, currentStatus, trainId},
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Treno modificato con successo!' });
@@ -51,7 +51,7 @@ router.delete('/:trainId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `DELETE FROM trains WHERE trainId = :trainId`,
-            [trainId],
+            {trainId},
             { autoCommit: true }
         );
         res.status(200).json({ message: 'Treno eliminato con successo!' });
@@ -82,7 +82,7 @@ router.get('/:trainId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `SELECT * FROM trains WHERE trainId = :trainId`,
-            [trainId]
+            {trainId}
         );
         res.status(200).json(result.rows);
         await connection.close();
@@ -98,7 +98,7 @@ router.get('/status/:statusId', async (req, res) => {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(
             `SELECT * FROM trains WHERE currentStatus = :statusId`,
-            [statusId]
+            {statusId}
         );
         res.status(200).json(result.rows);
         await connection.close();
