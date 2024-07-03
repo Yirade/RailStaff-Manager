@@ -190,7 +190,7 @@ export default function EmployeesPage() {
   const openStatusModal = (mode, status = null) => {
     setStatusModalMode(mode);
     if (mode === "edit" && status) {
-      setEditStatus({ EMPLOYMENTSTATUSID: status.EMPLOYMENTSTATUSID, STATUSNAME: status.STATUSNAME }); // Assicurati che 'status' sia un oggetto valido
+      setEditStatus({ EMPLOYMENTSTATUSID: status.EMPLOYMENTSTATUSID, STATUSNAME: status.STATUSNAME });
     } else {
       setEditStatus({ EMPLOYMENTSTATUSID: null, STATUSNAME: "" });
     }
@@ -210,7 +210,7 @@ export default function EmployeesPage() {
   const openPositionModal = (mode, position = null) => {
     setPositionModalMode(mode);
     if (mode === "edit" && position) {
-      setEditPosition({ POSITIONID: position.POSITIONID, POSITIONNAME: position.POSITIONNAME, SALARY: position.SALARY }); // Assicurati che 'position' sia un oggetto valido
+      setEditPosition({ POSITIONID: position.POSITIONID, POSITIONNAME: position.POSITIONNAME, SALARY: position.SALARY });
     } else {
       setEditPosition({ POSITIONID: null, POSITIONNAME: "", SALARY: "" });
     }
